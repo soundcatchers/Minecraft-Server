@@ -44,7 +44,7 @@ sudo su - minecraft
 
 ```bash
 # Clone this repository
-git clone <your-repo-url> minecraft-config
+git clone https://github.com/soundcatchers/minecraft-server minecraft-config
 cd minecraft-config
 
 # Run the setup script
