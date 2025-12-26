@@ -43,6 +43,8 @@ sudo su - minecraft
 ### 2. Clone and Setup
 
 ```bash
+# Activate Github
+sudo apt install git -y
 # Clone this repository
 git clone https://github.com/soundcatchers/minecraft-server minecraft-config
 cd minecraft-config
