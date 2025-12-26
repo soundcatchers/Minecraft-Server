@@ -1,0 +1,97 @@
+entities:
+  spawning:
+    all-chunks-are-slime-chunks: false
+    alt-item-despawn-rate:
+      enabled: true
+      items:
+        cobblestone: 300
+        netherrack: 300
+        sand: 300
+        gravel: 300
+        dirt: 300
+    count-all-mobs-for-spawning: false
+    creative-arrow-despawn-rate: 300
+    despawn-ranges:
+      ambient:
+        hard: 72
+        soft: 30
+      axolotls:
+        hard: 72
+        soft: 30
+      creature:
+        hard: 72
+        soft: 30
+      misc:
+        hard: 72
+        soft: 30
+      monster:
+        hard: 72
+        soft: 30
+      underground_water_creature:
+        hard: 72
+        soft: 30
+      water_ambient:
+        hard: 72
+        soft: 30
+      water_creature:
+        hard: 72
+        soft: 30
+    monsters-spawn-limit: 60
+    animals-spawn-limit: 10
+    water-animals-spawn-limit: 5
+    ambient-spawns-limit: 15
+
+  behavior:
+    door-breaking-difficulty:
+      husk: []
+      zombie: []
+      zombie_villager: []
+      zombified_piglin: []
+    ender-dragons-death-always-places-dragon-egg: false
+    mobs-can-always-pick-up-loot:
+      skeletons: false
+      zombies: false
+    nerf-pigmen-from-nether-portals: false
+    pillager-patrols:
+      disable: false
+      spawn-chance: 0.2
+      spawn-delay:
+        per-player: false
+        ticks: 12000
+      start:
+        per-player: false
+        day: 5
+
+  spawning:
+    fire-tick-delay: 30
+    max-entity-collisions: 4
+    should-remove-dragon: false
+
+misc:
+  update-pathfinding-on-block-update: true
+  max-leash-distance: 10.0
+  redstone-implementation: VANILLA
+
+chunks:
+  auto-save-interval: 6000
+  delay-chunk-unloads-by: 10s
+  entity-per-chunk-save-limit:
+    experience_orb: 16
+    snowball: 16
+    ender_pearl: 16
+    arrow: 16
+  fixed-chunk-inhabited-time: -1
+  max-auto-save-chunks-per-tick: 8
+  prevent-moving-into-unloaded-chunks: true
+
+tick-rates:
+  behavior:
+    villager:
+      validatenearbypoi: 60
+  container-update: 1
+  grass-spread: 4
+  mob-spawner: 2
+  sensor:
+    villager:
+      secondarypoisensor: 80
+      nearestbedsensor: 80
