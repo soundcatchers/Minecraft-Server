@@ -1,0 +1,12 @@
+[Unit]
+Description=Minecraft Server Auto-Update
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /mnt/ssd/minecraft-server/scripts/auto-update.sh
+User=root
+
+# Allow time for downloads
+TimeoutStartSec=600
