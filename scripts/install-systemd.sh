@@ -16,11 +16,35 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
+# Prompt for configuration
+echo ""
+echo "Server location:"
+echo "  1) SD Card (/home/minecraft/minecraft-server)"
+echo "  2) USB SSD (/mnt/ssd/minecraft-server)"
+read -p "Choose [1-2] (default: 1): " STORAGE_CHOICE
+STORAGE_CHOICE=${STORAGE_CHOICE:-1}
+
+if [ "$STORAGE_CHOICE" = "2" ]; then
+    SERVER_DIR="/mnt/ssd/minecraft-server"
+else
+    SERVER_DIR="/home/minecraft/minecraft-server"
+fi
+
+# Find Paper JAR
+PAPER_JAR=$(ls "$SERVER_DIR"/paper-*.jar 2>/dev/null | grep -v '.old' | head -1 | xargs basename 2>/dev/null)
+
+if [ -z "$PAPER_JAR" ]; then
+    echo "Error: No Paper JAR found in $SERVER_DIR"
+    echo "Please run setup.sh first."
+    exit 1
+fi
+
+echo ""
+echo "Using: $SERVER_DIR/$PAPER_JAR"
+
 # Configuration
 SERVICE_FILE="/etc/systemd/system/minecraft.service"
 MINECRAFT_USER="minecraft"
-SERVER_DIR="/home/minecraft/minecraft-server"
-PAPER_JAR="paper-1.21.10-129.jar"
 
 echo ""
 echo "[1/4] Creating systemd service file..."
@@ -37,7 +61,6 @@ User=$MINECRAFT_USER
 Group=$MINECRAFT_USER
 WorkingDirectory=$SERVER_DIR
 
-# Optimized Java startup with Aikar's flags for 3GB RAM
 ExecStart=/usr/bin/java -Xms3G -Xmx3G \\
   -XX:+AlwaysPreTouch \\
   -XX:+DisableExplicitGC \\
@@ -60,25 +83,21 @@ ExecStart=/usr/bin/java -Xms3G -Xmx3G \\
   -Daikars.new.flags=true \\
   -jar $PAPER_JAR nogui
 
-# Standard input/output
 StandardInput=null
 StandardOutput=journal
 StandardError=journal
 
-# Graceful shutdown - sends stop command to server
 SuccessExitStatus=0 1
 KillMode=mixed
 KillSignal=SIGTERM
 TimeoutStopSec=120
 
-# Restart on failure
 Restart=on-failure
 RestartSec=15
 
-# Resource limits (safety margins)
-CPUQuota=250%           # Max 2.5 CPU cores
-MemoryMax=3.5G          # Hard limit 3.5GB RAM
-LimitNOFILE=4096        # File descriptor limit
+CPUQuota=250%
+MemoryMax=3.5G
+LimitNOFILE=4096
 
 [Install]
 WantedBy=multi-user.target
