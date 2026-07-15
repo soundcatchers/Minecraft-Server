@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily Minecraft Server Auto-Update
+Documentation=Run automatic updates at 4 AM daily
+
+[Timer]
+OnCalendar=*-*-* 04:00:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target
